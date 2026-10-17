@@ -43,11 +43,13 @@ def run_traced_query(orchestrator, question: str) -> dict:
     # ["validation"] directly silently returns None even on a query that
     # actually passed. This was a real, confirmed bug in an earlier version
     # of this file -- verified directly against the actual return shape.
+    sql_res = result.get("sql_result") or {}
+    ret_res = result.get("retrieval_result") or {}
     log_decision("query_complete", question, {
         "trace_id": trace_id,
         "route": result["route"],
-        "sql_validation": result.get("sql_result", {}).get("metadata", {}).get("validation") if result.get("sql_result") else None,
-        "retrieval_chunk_count": len(result.get("retrieval_result", {}).get("sources", [])) if result.get("retrieval_result") else None,
+        "sql_validation": sql_res.get("metadata", {}).get("validation"),
+        "retrieval_chunk_count": ret_res.get("metadata", {}).get("chunk_count", 0),
         "token_usage": result.get("token_usage")
     })
 

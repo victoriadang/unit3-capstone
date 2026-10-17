@@ -97,7 +97,7 @@ def run_retrieval_agent(question: str) -> dict:
         return {
             "success": len(chunks) > 0,
         "answer": answer,
-        "sources": [c["source"] for c in chunks],
+        "sources": list(dict.fromkeys([c["source"] for c in chunks])),
         "metadata": {
             "chunk_count": len(chunks), 
             "grounded": check_grounding(answer, chunks),
@@ -113,6 +113,6 @@ def run_retrieval_agent(question: str) -> dict:
 
 
 # Test
-result = run_retrieval_agent("What does our onboarding process involve?")
-print(result["answer"])
-print("Sources used:", result["sources"])
+# result = run_retrieval_agent("What does our onboarding process involve?")
+# print(result["answer"])
+# print("Sources used:", result["sources"])

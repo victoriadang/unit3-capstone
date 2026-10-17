@@ -1,11 +1,3 @@
-"""
-Day 3 Lab Solution: Connect SQL Agent and Retrieval Agent to a Shared Tool Registry
-
-Standardizes both agents to a consistent interface, builds the registry,
-and includes a simple routing-suggestion preview (deliberately limited -
-see Part 4 notes on the combined-question test).
-"""
-
 import os
 from dotenv import load_dotenv
 from bedrock_client import invoke_claude
@@ -23,10 +15,13 @@ TOOL_REGISTRY = {
         "schema": {
             "name": "sql_agent",
             "description": (
-                "Query the relational database for structured, numeric, or categorical "
-                "data about clients, projects, consultants, and invoices - counts, totals, "
-                "statuses, and comparisons. Do not use for policy or procedural questions."
+                "Query the relational database (clients, projects, consultants, and invoices) for structured "
+                "data: counts, totals, averages, budgets, invoice amounts and payment status, project stauses "
+                "and dates, consultant assignments. Use for any questions answered by numbers or records. "
+                "NOT for policies, processess, how-to guidance, or narrative content from documents. "
+                "Read-only: never modifies data."
             ),
+                
             "input_schema": {
                 "type": "object",
                 "properties": {"question": {"type": "string"}},
@@ -39,9 +34,12 @@ TOOL_REGISTRY = {
         "schema": {
             "name": "retrieval_agent",
             "description": (
-                "Search indexed documents for policy, procedure, and case study information - "
-                "onboarding, expense guidelines, or project narratives. Do not use for "
-                "structured numeric or database questions."
+                "Search indexed company documents for (onboarding process, expenses "
+                "and remote work policies, cloud migration playbook, client reports) "
+                "and answer with citations. Use for any policy, procedure, and 'how do we..' "
+                "questions, and for project narratives. NOT for counts, totals, budgets, or "
+                "records stored in the database. If a question needs both numbers and documents, "
+                "both tools apply."
             ),
             "input_schema": {
                 "type": "object",
