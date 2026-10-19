@@ -5,3 +5,5 @@ opensearch-py
 requests-aws4auth
 sentence-transformers
 psycopg2-binary
+onnxruntime
+tokenizers

@@ -1,27 +1,11 @@
-"""
-Retrieval agent solution — same underlying logic as
-building-the-orchestrator-main/agents/retrieval_agent.py, wrapped in the
-retrieval_agent()/check_grounding() interface that
-shared-tool-registry-lab-solution's run_retrieval_agent() expects, per its
-own import: `from retrieval_agent_solution import retrieval_agent, check_grounding`.
-"""
 import boto3
 from opensearchpy import OpenSearch, RequestsHttpConnection
 from requests_aws4auth import AWS4Auth
-from sentence_transformers import SentenceTransformer
+from onnx_embed import get_embedding
 from bedrock_client import invoke_claude
 
 HOST = "search-vector-search-lesson-ojy2yxdbwpr7ba5t3njeuqxvb4.us-east-1.es.amazonaws.com"
 REGION = "us-east-1"
-
-_embed_model = None
-
-
-def get_embedding(text: str) -> list[float]:
-    global _embed_model
-    if _embed_model is None:
-        _embed_model = SentenceTransformer("all-MiniLM-L6-v2")
-    return _embed_model.encode(text).tolist()
 
 
 def get_opensearch_client():

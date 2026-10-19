@@ -23,11 +23,12 @@ class OrchestratorState(TypedDict):
 SQL_KEYWORDS = [
     "how many", "count", "total", "average", "sum", "revenue",
     "how much", "list all", "which clients", "projects", "invoices",
-    "consultants", "compare", "trend", "budget"
+    "consultants", "compare", "trend", "budget", "which client", "largest",
+    "highest", "contract", "how many"
 ]
 DOC_KEYWORDS = [
-    "policy", "process", "procedure", "methodology", "what is",
-    "explain", "describe", "guidelines", "approach", "onboarding"
+    "policy", "process", "procedure", "methodology",
+    "describe", "guidelines", "approach", "onboarding"
 ]
 
 
