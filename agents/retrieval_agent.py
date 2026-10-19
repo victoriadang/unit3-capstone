@@ -56,7 +56,7 @@ def generate_cited_answer(question: str, chunks: list[dict]) -> str:
         "Always cite the source number(s) you used.\n\n"
         f"CONTEXT:\n{context}\n\nQUESTION: {question}\n\nANSWER:"
     )
-    return invoke_claude(prompt, max_tokens=500)["text"]
+    return invoke_claude(prompt, max_tokens=500, component="retrieval_answer")["text"]
 
 
 def check_grounding(answer: str, chunks: list[dict]) -> bool:

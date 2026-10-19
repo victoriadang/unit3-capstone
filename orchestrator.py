@@ -84,7 +84,7 @@ def synthesise(state: OrchestratorState) -> OrchestratorState:
         f"Question: {state['question']}\n\n"
         f"Information:\n{context}"
     )
-    result = invoke_claude(prompt, max_tokens=800)
+    result = invoke_claude(prompt, max_tokens=800, component="synthesis")
 
     return {
         **state,

@@ -7,6 +7,7 @@ import json
 import uuid
 from datetime import datetime
 from orchestrator import route_question
+from cost_tracker import CALL_LOG, summarize
 
 
 def log_decision(stage: str, question: str, details: dict):
@@ -32,6 +33,8 @@ def run_traced_query(orchestrator, question: str) -> dict:
 
     log_decision("query_start", question, {"trace_id": trace_id})
 
+    start = len(CALL_LOG)
+
     result = orchestrator.invoke({
         "question": question, "route": None, "sql_result": None,
         "retrieval_result": None, "final_answer": None, "token_usage": None
@@ -45,12 +48,19 @@ def run_traced_query(orchestrator, question: str) -> dict:
     # of this file -- verified directly against the actual return shape.
     sql_res = result.get("sql_result") or {}
     ret_res = result.get("retrieval_result") or {}
+
+    calls = CALL_LOG[start:]
+    result["token_usage"] = {
+        "by_component": summarize(calls),
+        "total_cost_usd": sum(c["cost_usd"] for c in calls),
+    }
+
     log_decision("query_complete", question, {
         "trace_id": trace_id,
         "route": result["route"],
         "sql_validation": sql_res.get("metadata", {}).get("validation"),
         "retrieval_chunk_count": ret_res.get("metadata", {}).get("chunk_count", 0),
-        "token_usage": result.get("token_usage")
+        "token_usage": result["token_usage"]
     })
 
     return result

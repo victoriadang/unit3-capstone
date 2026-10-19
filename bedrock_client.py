@@ -12,6 +12,7 @@ available here.
 """
 import boto3
 import json
+from cost_tracker import record_usage
 
 bedrock = boto3.client("bedrock-runtime", region_name="us-east-1")
 
@@ -21,7 +22,7 @@ def get_model_id() -> str:
     return f"arn:aws:bedrock:us-east-1:{account_id}:inference-profile/us.anthropic.claude-sonnet-4-6"
 
 
-def invoke_claude(prompt: str, max_tokens: int = 500) -> dict:
+def invoke_claude(prompt: str, max_tokens: int = 500, component: str = "unknown") -> dict:
     """
     Sends a single-turn prompt to Claude via Bedrock and returns the response
     text alongside token usage. Use this for simple prompt-in, text-out calls
@@ -34,14 +35,17 @@ def invoke_claude(prompt: str, max_tokens: int = 500) -> dict:
     }
     response = bedrock.invoke_model(modelId=get_model_id(), body=json.dumps(body))
     result = json.loads(response["body"].read())
+    input_tokens = result["usage"]["input_tokens"]
+    output_tokens = result["usage"]["output_tokens"]
+    record_usage(component, input_tokens, output_tokens)
     return {
         "text": result["content"][0]["text"],
-        "input_tokens": result["usage"]["input_tokens"],
-        "output_tokens": result["usage"]["output_tokens"]
+        "input_tokens": input_tokens,
+        "output_tokens": output_tokens,
     }
 
 
-def invoke_claude_raw(body: dict) -> dict:
+def invoke_claude_raw(body: dict, component: str = "unknown") -> dict:
     """
     Lower-level helper for calls that need the full Messages API shape —
     system prompts, tool definitions, multi-turn conversations with
@@ -61,4 +65,7 @@ def invoke_claude_raw(body: dict) -> dict:
     body = {**body}
     body.setdefault("anthropic_version", "bedrock-2023-05-31")
     response = bedrock.invoke_model(modelId=get_model_id(), body=json.dumps(body))
-    return json.loads(response["body"].read())
+    result = json.loads(response["body"].read())
+    usage = result.get("usage", {})
+    record_usage(component, usage.get("input_tokens", 0), usage.get("output_tokens", 0))
+    return result

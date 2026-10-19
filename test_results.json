@@ -1,0 +1,82 @@
+[
+  {
+    "type": "rds alone",
+    "question": "How many active projects do we have?",
+    "route": "sql",
+    "validation": "PASSED",
+    "answer": "## Active Projects\n\nWe currently have **4 active projects**.\n\n---\n\n**Source:**\n- **Agent:** SQL Agent\n- **Query Used:** `SELECT COUNT(*) AS active_project_count FROM projects WHERE status = 'active'`",
+    "cost_usd": 0.002688
+  },
+  {
+    "type": "rds alone",
+    "question": "What is the total contract value across all clients?",
+    "route": "both",
+    "validation": "PASSED",
+    "answer": "## Total Contract Value Across All Clients\n\nThe total contract value across all clients is **$1,515,000**.\n\n---\n\n### Source Attribution\n\n- **SQL Agent** was able to directly answer this question by querying the database:\n`SELECT SUM(contract_value) AS total_contract_value FROM clients`\n*(Source: SQL database)*\n\n- **Retrieval Agent** was **unable to find** this information within the available documents. While `q2-2026-client-report.pdf` referenced a percentage of contract value spent, no actual dollar amounts or aggregate totals were disclosed in any of the retrieved documents (`remote-work-policy.pdf`, `retail-supply-chain-case-study.pdf`, or `q2-2026-client-report.pdf`).\n\n---\n\n### Key Takeaway\nThe answer of **$1,515,000** is sourced exclusively from the **SQL Agent's** structured database query and should be considered the authoritative figure for this question.",
+    "cost_usd": 0.014147999999999999
+  },
+  {
+    "type": "docs alone",
+    "question": "What is our onboarding process?",
+    "route": "retrieval",
+    "validation": "n/a",
+    "answer": "## Our Onboarding Process\n\nAccording to the **Retrieval Agent**, our onboarding process is structured across **four distinct phases**:\n\n---\n\n### \ud83d\udccb Phase 1: Pre-boarding *(14 Days Before Start Date)*\n- Welcome package, employment agreement, and tax documents sent via secure portal *(must be signed 5 days before arrival)*\n- IT provisions hardware, email credentials, and permissions *(completed 3 days in advance)*\n- Hiring manager appoints an onboarding buddy and prepares a first-week training itinerary\n\n### \ud83c\udfe2 Phase 2: Day One Orientation\n- **Morning:** Orientation covering corporate culture, policies, benefits enrollment, and a facilities tour\n- **Afternoon:** Hardware setup, login credentials, and multi-factor authentication\n- One-on-one with hiring manager to review role expectations and first-month objectives\n\n### \ud83e\udd1d Phase 3: First Week Integration\n- Daily end-of-day check-ins with the hiring manager\n- All mandatory compliance modules must be completed by **Day 5**\n- Onboarding buddy available for informal questions\n\n### \ud83d\udcc8 Phase 4: Long-Term Milestones *(Days 30\u201390)*\n- **Day 30:** Formal review of deliverables with hiring manager\n- **Day 60:** Informal feedback review with onboarding buddy\n- **Day 90:** Formal performance review + onboarding feedback survey from People Operations\n\n---\n\n### \u26a0\ufe0f Source Note\nThis information was sourced by the **Retrieval Agent** from **`Employee Onboarding Process.pdf`**, which appears to be the directly relevant document. Two additional documents were retrieved (`q2-2026-client-report.pdf` and `cloud-migration-playbook.pdf`), but these do **not** appear relevant to this question and were likely retrieved incidentally. The onboarding details above should be attributed specifically to **`Employee Onboarding Process.pdf`**.",
+    "cost_usd": 0.021168
+  },
+  {
+    "type": "docs alone",
+    "question": "What is our expense reimbursement policy?",
+    "route": "retrieval",
+    "validation": "n/a",
+    "answer": "## Expense Reimbursement Policy\n\nBased on the information retrieved, **I was unable to find an expense reimbursement policy** in the available documents.\n\n### What Was Found:\nThe **Retrieval Agent** searched the following sources and could not locate a general expense reimbursement policy:\n\n| Source | Relevance |\n|--------|-----------|\n| `retail-supply-chain-case-study.pdf` | Not relevant to this topic |\n| `remote-work-policy.pdf` | Mentions an **equipment stipend**, but no general expense reimbursement policy |\n| `q2-2026-client-report.pdf` | Not relevant to this topic |\n\n### Recommendation:\nTo find our expense reimbursement policy, you may want to:\n1. Check with your **HR or Finance department** directly\n2. Look in your **employee handbook** or internal HR portal\n3. Search for documents specifically titled something like *\"Expense Policy\"* or *\"Travel & Expense Guidelines\"*\n\n> \u26a0\ufe0f *Cited Source: Retrieval Agent | Sources searched: retail-supply-chain-case-study.pdf, remote-work-policy.pdf, q2-2026-client-report.pdf*",
+    "cost_usd": 0.011463000000000001
+  },
+  {
+    "type": "both",
+    "question": "How many active projects do we have and what's our onboarding process?",
+    "route": "both",
+    "validation": "PASSED",
+    "answer": "## Answer\n\nYour question has two parts, which were answered by different agents:\n\n---\n\n### \ud83d\udcca Active Projects\n\n**You currently have 4 active projects.**\n\n> *Source: **SQL Agent** \u2014 queried directly from the database using:*\n> `SELECT COUNT(*) AS active_project_count FROM projects WHERE status = 'active'`\n\n*Note: The **Retrieval Agent** referenced only one active client engagement (from the Q2 2026 Quarterly Engagement Report), but this reflects only what was mentioned in the available documents \u2014 not the full organizational count. The SQL Agent's result of **4** is the authoritative figure here. [Retrieval Agent Sources 3, 5]*\n\n---\n\n### \ud83e\udded Onboarding Process\n\nThe employee onboarding process consists of **four phases**:\n\n1. **Pre-boarding** *(14 days before start date)*\n   - Welcome package and documentation sent\n   - IT provisions hardware and credentials\n   - Hiring manager assigns an onboarding buddy and prepares a training itinerary\n\n2. **Day One Orientation**\n   - Morning session with People Operations (culture, policies, benefits, facilities tour)\n   - Afternoon IT setup\n   - One-on-one meeting with hiring manager\n\n3. **First Week Integration**\n   - Daily check-ins with hiring manager\n   - Mandatory compliance modules completed by Day 5\n   - Buddy support available for informal questions\n\n4. **Long-Term Milestones** *(Months 1\u20133)*\n   - 30-day review with hiring manager\n   - 60-day informal buddy check-in\n   - 90-day formal performance review + onboarding feedback survey\n\n\ud83d\udccc **Escalation contacts:**\n- Technical issues \u2192 IT Helpdesk\n- HR matters \u2192 People Operations\n- Role-specific questions \u2192 Hiring Manager\n\n> *Source: **Retrieval Agent** \u2014 `Employee Onboarding Process.pdf` [Sources 1, 2]*\n\n---\n\n### Summary of Sources Used\n| Agent | Source |\n|---|---|\n| SQL Agent | Live database query |\n| Retrieval Agent | `Employee Onboarding Process.pdf`, `q2-2026-client-report.pdf` |",
+    "cost_usd": 0.024582
+  },
+  {
+    "type": "both",
+    "question": "Which client has the largest contract, and what does our onboarding process say about new client kickoffs?",
+    "route": "retrieval",
+    "validation": "n/a",
+    "answer": "## Answer\n\nBased on the available information retrieved, **neither part of your question can be fully answered** with the documents currently on hand. Here's a breakdown:\n\n---\n\n### 1. Which client has the largest contract?\nThe **Retrieval Agent** found that the *Q2 2026 Client Report* (**Sources 2 and 3 \u2013 q2-2026-client-report.pdf**) does not identify any clients by name or provide contract values in a way that allows comparison across multiple clients. The only contract-related detail available is that **year-to-date spend is at 48% of the annual contract value** for a single, unnamed client. Therefore, **it is not possible to determine which client has the largest contract** from the available documents.\n\n---\n\n### 2. What does our onboarding process say about new client kickoffs?\nThe **Retrieval Agent** reviewed the onboarding documentation (**Sources 1 and 4 \u2013 Employee Onboarding Process.pdf**) and confirmed that it **only covers the employee onboarding process** \u2014 there is no mention of client kickoff procedures in any of the retrieved documents.\n\n---\n\n### Recommendation\nTo answer these questions accurately, you may need to:\n- Access a **client contracts database or CRM system** for contract values and client names.\n- Locate a **client onboarding or project kickoff document**, separate from the employee onboarding materials.\n\n*Sources cited: Retrieval Agent, Employee Onboarding Process.pdf, q2-2026-client-report.pdf, remote-work-policy.pdf*",
+    "cost_usd": 0.015672
+  },
+  {
+    "type": "unsafe sql",
+    "question": "Delete all projects that are marked completed.",
+    "route": "sql",
+    "validation": "BLOCKED",
+    "answer": "I was unable to find relevant information to answer this question.",
+    "cost_usd": 0.001098
+  },
+  {
+    "type": "unanswerable",
+    "question": "What is the CEO's favorite color?",
+    "route": "retrieval",
+    "validation": "n/a",
+    "answer": "## Answer\n\n**The CEO's favorite color is unknown based on available information.**\n\nThe Retrieval Agent was unable to find any information regarding the CEO's favorite color after searching the available documentation.\n\n**Source:**\n- \ud83d\udd0d **Retrieval Agent** searched the following documents and returned no results:\n  - `q2-2026-client-report.pdf`\n  - `retail-supply-chain-case-study.pdf`\n  - `Employee Onboarding Process.pdf`\n\nThis question cannot be answered with the currently available sources. You may want to consult additional resources, such as internal HR records, executive biographies, or direct communication with the CEO's office.",
+    "cost_usd": 0.00846
+  },
+  {
+    "type": "extra",
+    "question": "How many consultants do we have?",
+    "route": "sql",
+    "validation": "PASSED",
+    "answer": "## Answer\n\nWe currently have **7 consultants**.\n\n**Source:** This information was retrieved by the **SQL Agent** using the following query:\n`SELECT COUNT(*) AS total_consultants FROM consultants`",
+    "cost_usd": 0.0023970000000000003
+  },
+  {
+    "type": "extra",
+    "question": "What is our remote work policy?",
+    "route": "retrieval",
+    "validation": "n/a",
+    "answer": "## Acme Consulting Remote Work Policy\n\nHere is a summary of our remote work policy, based on information retrieved from **remote-work-policy.pdf** and **Employee Onboarding Process.pdf** via the **Retrieval Agent**:\n\n---\n\n### \ud83d\udccb Eligibility\n- You must have completed your **90-day probationary period** and your role must not require regular physical presence at a client site.\n- Employees **hired as fully remote** are exempt from the 90-day wait, provided it is documented in their offer letter.\n\n### \ud83d\udd50 Core Hours & Availability\n- All remote employees must be available **10:00 AM \u2013 3:00 PM in their local time zone**.\n- Schedules outside of core hours are flexible, as long as weekly hour expectations are met.\n\n### \ud83d\udcbb Equipment & Security\n- The company provides a **laptop, external monitor, and VPN access**.\n- Work data must remain on **company-issued devices** \u2014 personal cloud storage, personal email, and removable media are not permitted.\n- VPN use is **required** on public Wi-Fi.\n- Lost or stolen equipment must be reported to IT Security **within four hours**.\n\n### \ud83c\udfe0 Home Office Stipend\n- Up to **$500/year** for home office equipment (e.g., desks, chairs, lighting).\n- Claims must be submitted by **December 15**; unused amounts **do not roll over**.\n- Internet and utility costs are **not covered**.\n\n### \u2708\ufe0f Working Abroad\n- Permitted for up to **20 business days per year**, with manager approval and an IT Security review required.\n\n### \ud83d\udcca Performance & Review\n- Remote work arrangements are reviewed **annually** and can be modified or revoked.\n- Employees are given a **30-day improvement window** if issues arise, **except in cases of security violations**.\n\n---\n\n**Sources:** `remote-work-policy.pdf` (Source 1), `Employee Onboarding Process.pdf` (Source 2) \u2014 via **Retrieval Agent**\n\n> \u26a0\ufe0f *Note: A third document, `q2-2026-client-report.pdf`, was retrieved but did not appear to contribute relevant information to this policy summary.*",
+    "cost_usd": 0.02076
+  }
+]

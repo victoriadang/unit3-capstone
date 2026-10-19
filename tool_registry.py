@@ -71,7 +71,7 @@ def suggest_tool(question: str) -> str:
         f"Question: {question}\n\n"
         "Which tool should handle this? Reply with only the tool name."
     )
-    result = invoke_claude(prompt, max_tokens=500)
+    result = invoke_claude(prompt, max_tokens=500, component="classification")
     return result["text"].strip()
 
 
